@@ -7,10 +7,9 @@ USE GPG;
 CREATE TABLE usuarios(
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE,
-    password VARCHAR(255)
+    password VARCHAR(255),
+    rol BOOLEAN DEFAULT FALSE
 );
-
-INSERT INTO usuarios(email, password) VALUES('juan@gmail.com', '1234');
 
 CREATE TABLE profesores(
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -70,3 +69,8 @@ CREATE TABLE asignaturas_estudiantes(
     FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id)
 );
 
+------ CREACION DE DOS PROFESORES ------
+INSERT INTO usuarios(email, password, rol) VALUES('juan@gmail.com', '$2y$10$bLCHV/yErBOgu8W/Hf9tUu88tTxCUxf4hS8s2vBNPQKELEf/2c/WK', 1);
+INSERT INTO usuarios(email, password, rol) VALUES('pedro@gmail.com', '$2y$10$bLCHV/yErBOgu8W/Hf9tUu88tTxCUxf4hS8s2vBNPQKELEf/2c/WK', 1);
+INSERT INTO profesores(name, cedula, telefono, user_id) VALUES('Juan', '123456789', '123456789', 1);
+INSERT INTO profesores(name, cedula, telefono, user_id) VALUES('Pedro', '123456789', '123456789', 2);

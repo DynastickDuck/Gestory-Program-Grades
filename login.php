@@ -30,12 +30,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 // desahacer de la contrasena
                 unset($user['password']);
+                // determinar si el usuario es profesor o estudiante
+                if ($user['rol'] == 1) {
+                    $user['type'] = "profesor";
+                } else {
+                    $user['type'] = "estudiante";
+                }
                 // iniciamos una sesion la cual es como una cookie
                 session_start();
                 // guardamos el usuario en la sesion
                 $_SESSION['user'] = $user;
-                // redireccionamos a la pagina de inicio
-                header("Location: home.php");
+                // redireccionamos a la pagina de inicio dependiendo del tipo de usuario
+                if ($user['type'] == "profesor") {
+                    header("Location: ./admin/profesor/home.php");
+                } else {
+                    header("Location: ./admin/estudiante/home.php");
+                }
+                
             }
         }
     }
@@ -44,46 +55,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php require 'partials/header.php'; ?>
-<?php require 'partials/nabvar.php'; ?>
+<?php require 'partials/navbar.php'; ?>
 
-    <div class="container pt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card text-center">
-                    <div class="card-header">Login</div>
-                    <div class="card-body">
-                        <!-- mostrar errores si es que existen -->
-                        <?php if(isset($error)): ?>
-                            <p class="text-danger">
-                                <?= $error ?>
-                            </p>
-                        <?php endif; ?>
+<div class="container pt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card text-center">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+          <!-- si hay un error mandar un danger -->
+          <?php if ($error): ?> 
+            <p class="text-danger">
+              <?= $error ?>
+            </p>
+          <?php endif ?>
+          <form method="POST" action="login.php">
 
-                        <form action="login.php" method="post">
-                            <div class="mb-3 row">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
-                                <div class="col-mb-6">
-                                    <input type="email" id="email" class="form-control" name="email" required>
-                                </div>
-                            </div>
-                            <div>
-                                <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
-                                <div class="col-mb-6">
-                                    <input type="password" id="password" class="form-control" name="password" required>
-                                </div>
-                            </div>
-                            <div class="mb-3 row">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                            <p>Don't have acount yet?</p>
-                            <a href="register.php" style="color: #ff9900;">Register!</a>
-                        </form>
-                    </div>
-                </div>
+            <div class="mb-3 row">
+              <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
+
+              <div class="col-md-6">
+                <input id="email" type="email" class="form-control" name="email" required autocomplete="email" autofocus>
+              </div>
             </div>
+
+            <div class="mb-3 row">
+              <label for="password" class="col-md-4 col-form-label text-md-end">Password</label>
+
+              <div class="col-md-6">
+                <input id="password" type="password" class="form-control" name="password" required autocomplete="password" autofocus>
+              </div>
+            </div>
+
+            <div class="mb-3 row">
+              <div class="col-md-6 offset-md-4">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+            <p>Don't have acount yet?</p>
+            <a href="register.php">Register!</a>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 
 <?php require 'partials/footer.php'; ?>
