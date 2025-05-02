@@ -46,7 +46,7 @@
             <?= htmlspecialchars($_SESSION["user"]["email"]) ?>
           </button>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li><a class="dropdown-item text-danger" href="logout.php">Cerrar sesión</a></li>
+            <li><a class="dropdown-item text-danger" href="/Gestory-Program-Grades/logout.php">Cerrar sesión</a></li>
           </ul>
         </div>
       <?php endif; ?>

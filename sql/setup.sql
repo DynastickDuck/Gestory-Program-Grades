@@ -31,6 +31,7 @@ CREATE TABLE asignaturas(
 CREATE TABLE periodos(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
+    cantidad_notas INT,
     asignatura_id INT,
     FOREIGN KEY (asignatura_id) REFERENCES asignaturas(id)
 );
