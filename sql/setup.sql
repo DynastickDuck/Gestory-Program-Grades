@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS GPG;
+
 CREATE DATABASE GPG;
 
 USE GPG;
@@ -5,13 +7,66 @@ USE GPG;
 CREATE TABLE usuarios(
     id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE,
-    password VARCHAR(255),
-    name VARCHAR(255),
-    rol BOOLEAN DEFAULT(0)-- 1=PROFESOR 0= ESTUDIANTE
+    password VARCHAR(255)
 );
 
-CREATE TABLE calificaciones(
+INSERT INTO usuarios(email, password) VALUES('juan@gmail.com', '1234');
+
+CREATE TABLE profesores(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    
-)
+    name VARCHAR(255),
+    cedula VARCHAR(255),
+    telefono VARCHAR(255),
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+);
+
+CREATE TABLE asignaturas(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    description VARCHAR(255),
+    profesor_id INT,
+    FOREIGN KEY (profesor_id) REFERENCES profesores(id)
+);
+
+CREATE TABLE periodos(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    asignatura_id INT,
+    FOREIGN KEY (asignatura_id) REFERENCES asignaturas(id)
+);
+
+CREATE TABLE notas(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    valor VARCHAR(255),
+    observaciones VARCHAR(255),
+    periodo_id INT,
+    FOREIGN KEY (periodo_id) REFERENCES periodos(id)
+);
+
+CREATE TABLE comentarios(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    comentario VARCHAR(255),
+    nota_id INT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id),
+    FOREIGN KEY (nota_id) REFERENCES notas(id)
+);
+
+CREATE TABLE estudiantes(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    cedula VARCHAR(255),
+    telefono VARCHAR(255),
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id)
+);
+
+-- PIVOTE ENTRE ESDUDIANTES Y ASIGNATURAS --
+CREATE TABLE asignaturas_estudiantes(
+    asignatura_id INT,
+    estudiante_id INT,
+    FOREIGN KEY (asignatura_id) REFERENCES asignaturas(id),
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id)
+);
 
