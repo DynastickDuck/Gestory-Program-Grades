@@ -39,7 +39,7 @@ $estudiantes = $conn->query("SELECT * FROM estudiantes e LEFT JOIN asignaturas_e
                     <?php foreach ($estudiantes as $estudiante): ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <?= htmlspecialchars($estudiante['name']) ?> (<?= $estudiante['cedula'] ?>)
-                            <a href="detalle_estudiante.php?id=<?= $estudiante['id'] ?>" class="btn btn-sm btn-primary">Ver Detalle</a>
+                            <a href="ver_estudiantes.php?id=<?= $estudiante['id'] ?>" class="btn btn-sm btn-primary">Ver Detalle</a>
                         </li>
                     <?php endforeach; ?>
                 </ul>

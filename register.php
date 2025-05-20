@@ -22,11 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($statement->rowCount() > 0) {
             $error = "El email ya existe";
         } else {
-            $statement = $conn->prepare("INSERT INTO usuarios(email, password) VALUES(:email, :password)");
-            // sanitizar datos
+            // definimos el rol como estudiante (0)
+            $rol = 0;
+
+            // insertamos el nuevo usuario con su rol
+            $statement = $conn->prepare("INSERT INTO usuarios(email, password, rol) VALUES(:email, :password, :rol)");
             $statement->execute([
                 ":email" => $_POST['email'],
                 ":password" => password_hash($_POST['password'], PASSWORD_BCRYPT),
+                ":rol" => $rol
             ]);
 
             // iniciamos sesion con el usuario
@@ -65,12 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-        
+
 <?php require("./partials/header.php"); ?>
 <?php require("./partials/navbar.php"); ?>
-
-
-
 
 <div class="container pt-5">
   <div class="row justify-content-center">
@@ -137,5 +138,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 </div>
 
-
 <?php require("./partials/footer.php"); ?>
+

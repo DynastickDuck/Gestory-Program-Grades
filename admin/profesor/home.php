@@ -33,6 +33,8 @@ $estudiantes = $conn->query("SELECT * FROM estudiantes");
             <h3 class="mb-0">Tus Materias</h3>
             <!-- Botón para agregar materia -->
             <a href="agregar_materia.php" class="btn btn-primary">Agregar Materia</a>
+            <a href="ver_quejas.php" class="btn btn-warning">Ver Quejas</a>
+
         </div>
         <div class="card-body">
             <?php if ($asignaturas): ?>

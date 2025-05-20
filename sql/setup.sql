@@ -75,3 +75,7 @@ INSERT INTO usuarios(email, password, rol) VALUES('juan@gmail.com', '$2y$10$bLCH
 INSERT INTO usuarios(email, password, rol) VALUES('pedro@gmail.com', '$2y$10$bLCHV/yErBOgu8W/Hf9tUu88tTxCUxf4hS8s2vBNPQKELEf/2c/WK', 1);
 INSERT INTO profesores(name, cedula, telefono, user_id) VALUES('Juan', '123456789', '123456789', 1);
 INSERT INTO profesores(name, cedula, telefono, user_id) VALUES('Pedro', '123456789', '123456789', 2);
+
+ALTER TABLE notas ADD estudiante_id INT AFTER periodo_id;
+ALTER TABLE notas ADD FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id);
+
